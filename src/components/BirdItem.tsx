@@ -40,7 +40,7 @@ const BirdItem: React.FC<BirdListItemProps> = (props) => {
                 </div>
             </div>
 
-            <span className="font-semibold text-gray-600">{bird.points} pts</span>
+            <span className="font-semibold text-gray-600 whitespace-nowrap text-right">{bird.points} pts</span>
 
             {showSwitch && (
                 <Switch

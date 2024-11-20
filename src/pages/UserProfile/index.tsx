@@ -56,7 +56,7 @@ const UserProfile: React.FC = () => {
                         </button>
                         <div className="text-right mt-auto">
                             <h2 className="text-xl font-bold">{user?.name}</h2>
-                            <p className="text-lg font-semibold">{userStats?.totalBirdwatchPoints} pontos</p>
+                            <p className="text-lg font-semibold">{userStats?.totalBirdwatchPoints} pts</p>
                         </div>
                     </div>
                 </div>

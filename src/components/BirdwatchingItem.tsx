@@ -18,8 +18,8 @@ const BirdwatchingItem: React.FC<Props> = ({ birdwatching }) => (
             </div>
 
             <div className="flex flex-col items-end">
-                <span className="text-xl font-semibold text-gray-600">{birdwatching.totalPoints} pts</span>
-                <span className="text-xs">
+                <span className="text-xl font-semibold text-gray-600 text-right">{birdwatching.totalPoints} pts</span>
+                <span className="text-xs text-right">
                     {birdwatching.date.toDate().toLocaleDateString('pt-BR')} às {birdwatching.date.toDate().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                 </span>
             </div>

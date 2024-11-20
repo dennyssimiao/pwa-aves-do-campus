@@ -54,7 +54,7 @@ const BirdwatchingDetails: React.FC = () => {
                 </div>
                 <div className="flex flex-col justify-between items-end">
                     <div className="text-right mt-auto">
-                        <h2 className="text-2xl font-semibold">{birdwatching.totalPoints} pontos</h2>
+                        <h2 className="text-2xl font-semibold">{birdwatching.totalPoints} pts</h2>
                         <p className="text-sm">{birdwatching.date.toDate().toLocaleDateString('pt-BR')} às {birdwatching.date.toDate().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
                         </p>
                     </div>
