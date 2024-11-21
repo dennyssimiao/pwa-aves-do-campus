@@ -40,17 +40,21 @@ const BirdItem: React.FC<BirdListItemProps> = (props) => {
                 </div>
             </div>
 
-            <span className="font-semibold text-gray-600 whitespace-nowrap text-right">{bird.points} pts</span>
+            <span className="flex-shrink-0 font-semibold text-gray-600 text-right whitespace-nowrap">{bird.points} pts</span>
 
             {showSwitch && (
                 <Switch
                     checked={props.isSelected}
                     onChange={() => props.onToggle(bird.id)}
                     onClick={(e) => e.stopPropagation()}
-                    className={`${props.isSelected ? 'bg-blue-500' : 'bg-gray-300'} relative inline-flex h-6 w-11 items-center rounded-full transition`}
+                    className={`${
+                        props.isSelected ? 'bg-blue-500' : 'bg-gray-300'
+                    } relative inline-flex flex-shrink-0 h-6 w-11 items-center rounded-full transition`}
                 >
                     <span
-                        className={`${props.isSelected ? 'translate-x-6' : 'translate-x-1'} inline-block h-4 w-4 transform rounded-full bg-white transition`} />
+                        className={`${
+                            props.isSelected ? 'translate-x-6' : 'translate-x-1'
+                        } inline-block h-4 w-4 transform rounded-full bg-white transition`} />
                 </Switch>
             )}
         </li>

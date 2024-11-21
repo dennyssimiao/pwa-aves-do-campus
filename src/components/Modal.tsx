@@ -21,13 +21,13 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm, title, messag
                         onClick={onClose}
                         className="bg-gray-300 px-4 py-2 rounded-md hover:bg-gray-400"
                     >
-                        Cancelar
+                        Não
                     </button>
                     <button
                         onClick={onConfirm}
                         className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                     >
-                        Confirmar
+                        Sim
                     </button>
                 </div>
             </div>
