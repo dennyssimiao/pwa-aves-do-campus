@@ -9,7 +9,15 @@ import SearchBar from 'components/SearchBar';
 
 const RegisterBirdwatch: React.FC = () => {
     const navigate = useNavigate();
-    const { selectedBirds, date, setDate, handleBirdToggle, resetBirdwatching } = useBirdwatching();
+    const {
+        selectedBirds,
+        date,
+        totalPoints,
+        setSelectedBirds,
+        setDate,
+        setTotalPoints,
+        resetBirdwatching
+    } = useBirdwatching();
 
     const [searchTerm, setSearchTerm] = useState('');
     const [birds, setBirds] = useState<Bird[]>([]);
@@ -22,6 +30,25 @@ const RegisterBirdwatch: React.FC = () => {
         };
         fetchUserData();
     }, [useMockData, setBirds]);
+
+    const handleBirdToggle = (birdId: string) => {
+        const newSelectedBirds = new Set(selectedBirds);
+        let newTotalPoints = totalPoints;
+
+        const bird = birds.find(bird => bird.id === birdId);
+        const birdPoints = bird?.points || 0;
+        
+        if (newSelectedBirds.has(birdId)) {
+            newSelectedBirds.delete(birdId);
+            newTotalPoints -= birdPoints;
+        } else {
+            newSelectedBirds.add(birdId);
+            newTotalPoints += birdPoints;
+        }
+
+        setTotalPoints(newTotalPoints)
+        setSelectedBirds(newSelectedBirds);
+    };
 
     const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const [year, month, day] = e.target.value.split('-').map(Number);
@@ -65,8 +92,11 @@ const RegisterBirdwatch: React.FC = () => {
     return (
         <div className="max-w-lg mx-auto p-5 pb-20">
             <div className="p-4 rounded-lg bg-gray-800 text-white">
-                <h1 className="text-2xl font-bold mb-4">Nova Passarinhada</h1>
-
+                <div className="flex justify-between gap-2">
+                    <h1 className="text-2xl font-bold mb-4">Nova Passarinhada</h1>
+                    <span className="text-xl font-semibold text-right whitespace-nowrap">{totalPoints} pts</span>
+                </div>
+                
                 <div className="flex justify-between">
                     <label className="flex flex-col items-start w-1/2 mr-2">
                         <span className="text-sm font-semibol">Data:</span>
