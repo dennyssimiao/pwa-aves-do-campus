@@ -1,6 +1,11 @@
 {
   "short_name": "Aves do Campus",
   "name": "Aves do Campus",
+  "description": "Registre suas observações de pássaros no campus da Universidade Estadual do Ceará.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#fff5d1",
   "icons": [
     {
       "src": "favicon.ico",
@@ -17,9 +22,5 @@
       "type": "image/png",
       "sizes": "512x512"
     }
-  ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  ]
 }
