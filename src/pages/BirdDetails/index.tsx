@@ -86,8 +86,8 @@ const BirdDetails: React.FC = () => {
             </div>
 
             <div className="text-gray-600 text-base">
-                <p className="my-4">{bird.description}</p>
-                {bird.otherNames.length > 0 && (<p><strong>Outros Nomes:</strong> {bird.otherNames.join(', ')}</p>)}
+                <p className="text-base my-4">{bird.description}</p>
+                {bird.otherNames.length > 0 && (<p className="text-base my-4"><strong>Outros Nomes:</strong> {bird.otherNames.join(', ')}</p>)}
             </div>
 
             <MainButton onClick={handleBack}>Voltar</MainButton>
