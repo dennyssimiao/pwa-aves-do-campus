@@ -7,6 +7,7 @@ import { Bird } from 'types/Birds';
 import BirdItem from 'components/BirdItem';
 import SearchBar from 'components/SearchBar';
 import Modal from 'components/Modal';
+import DateTimePicker from 'components/DateTimePicker';
 
 const RegisterBirdwatch: React.FC = () => {
     const navigate = useNavigate();
@@ -54,28 +55,6 @@ const RegisterBirdwatch: React.FC = () => {
         setSelectedBirds(newSelectedBirds);
     };
 
-    const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const [year, month, day] = e.target.value.split('-').map(Number);
-        setDate(new Date(
-            year,
-            month,
-            day,
-            date.getHours(),
-            date.getMinutes()
-        ));
-    };
-
-    const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const [hours, minutes] = e.target.value.split(':').map(Number);
-        setDate(new Date(
-            date.getFullYear(),
-            date.getMonth(),
-            date.getDate(),
-            hours,
-            minutes
-        ));
-    };
-
     const handleSave = () => {
         // TODO: Salvar a passarinhada no banco
         console.log('Passarinhada salva com sucesso!');
@@ -103,26 +82,7 @@ const RegisterBirdwatch: React.FC = () => {
                     <span className="text-xl font-semibold text-right whitespace-nowrap">{totalPoints} pts</span>
                 </div>
 
-                <div className="flex justify-between">
-                    <label className="flex flex-col items-start w-1/2 mr-2">
-                        <span className="text-sm font-semibol">Data:</span>
-                        <input
-                            type="date"
-                            value={`${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`}
-                            onChange={handleDateChange}
-                            className="mt-1 p-2 text-gray-800 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                        />
-                    </label>
-                    <label className="flex flex-col items-start w-1/2 ml-2">
-                        <span className="text-sm font-semibold">Hora:</span>
-                        <input
-                            type="time"
-                            value={`${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`}
-                            onChange={handleTimeChange}
-                            className="mt-1 p-2 text-gray-800 border border-gray-300 rounded w-full focus:ring-2 focus:ring-blue-400 focus:outline-none"
-                        />
-                    </label>
-                </div>
+                <DateTimePicker date={date} setDate={setDate}/>
             </div>
 
             <SearchBar
