@@ -3,7 +3,7 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 
 import UserProfile from 'pages/UserProfile';
-import RegisterBirdwatch from 'pages/RegisterBirdWatching';
+import RegisterBirdwatch from 'pages/RegisterBirdwatching';
 import BirdDetails from 'pages/BirdDetails';
 import { BirdwatchingProvider } from 'contexts/BirdwatchingContext';
 import BirdwatchingDetails from 'pages/BirdwatchingDetails';

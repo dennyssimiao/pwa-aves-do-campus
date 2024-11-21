@@ -6,6 +6,7 @@ import { getBirdsFromDb } from 'services/firebase';
 import { Bird } from 'types/Birds';
 import BirdItem from 'components/BirdItem';
 import SearchBar from 'components/SearchBar';
+import Modal from 'components/Modal';
 
 const RegisterBirdwatch: React.FC = () => {
     const navigate = useNavigate();
@@ -22,6 +23,9 @@ const RegisterBirdwatch: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [birds, setBirds] = useState<Bird[]>([]);
 
+    const [isCancelModalOpen, setCancelModalOpen] = useState(false);
+    const [isSaveModalOpen, setSaveModalOpen] = useState(false);
+
     const useMockData = process.env.REACT_APP_USE_MOCK_DATA === 'true';
 
     useEffect(() => {
@@ -37,7 +41,7 @@ const RegisterBirdwatch: React.FC = () => {
 
         const bird = birds.find(bird => bird.id === birdId);
         const birdPoints = bird?.points || 0;
-        
+
         if (newSelectedBirds.has(birdId)) {
             newSelectedBirds.delete(birdId);
             newTotalPoints -= birdPoints;
@@ -75,12 +79,14 @@ const RegisterBirdwatch: React.FC = () => {
     const handleSave = () => {
         // TODO: Salvar a passarinhada no banco
         console.log('Passarinhada salva com sucesso!');
+        setSaveModalOpen(false);
         resetBirdwatching();
         navigate('/user-profile');
     };
 
     const handleCancel = () => {
         console.log('Passarinhada cancelada!');
+        setCancelModalOpen(false);
         resetBirdwatching();
         navigate('/user-profile');
     };
@@ -96,7 +102,7 @@ const RegisterBirdwatch: React.FC = () => {
                     <h1 className="text-2xl font-bold mb-4">Nova Passarinhada</h1>
                     <span className="text-xl font-semibold text-right whitespace-nowrap">{totalPoints} pts</span>
                 </div>
-                
+
                 <div className="flex justify-between">
                     <label className="flex flex-col items-start w-1/2 mr-2">
                         <span className="text-sm font-semibol">Data:</span>
@@ -140,17 +146,33 @@ const RegisterBirdwatch: React.FC = () => {
             <div className="flex fixed bottom-0 left-0 right-0 bg-gray-100 border-t border-gray-300 shadow-md">
                 <button
                     className="flex-1 py-4 bg-red-500 text-white font-bold text-lg hover:bg-red-600 transition"
-                    onClick={handleCancel}
+                    onClick={() => setCancelModalOpen(true)}
                 >
                     Cancelar
                 </button>
                 <button
                     className="flex-1 py-4 bg-blue-500 text-white font-bold text-lg hover:bg-blue-600 transition"
-                    onClick={handleSave}
+                    onClick={() => setSaveModalOpen(true)}
                 >
                     Salvar
                 </button>
             </div>
+
+            <Modal
+                isOpen={isCancelModalOpen}
+                onClose={() => setCancelModalOpen(false)}
+                onConfirm={handleCancel}
+                title="Confirmar Cancelamento"
+                message="Você tem certeza que deseja cancelar? Todos os dados não salvos serão perdidos."
+            />
+
+            <Modal
+                isOpen={isSaveModalOpen}
+                onClose={() => setSaveModalOpen(false)}
+                onConfirm={handleSave}
+                title="Confirmar Salvar"
+                message="Você tem certeza que deseja salvar? Os dados serão registrados."
+            />
         </div>
     );
 };
