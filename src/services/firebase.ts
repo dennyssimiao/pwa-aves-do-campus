@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from 'firebase/firestore';
+import { collection, getDocs, orderBy, query, where } from 'firebase/firestore';
 import { Bird } from 'types/Birds';
 import { Birdwatching } from 'types/Birdwatching';
 import { UserStats } from 'types/UserStats';
@@ -30,7 +30,7 @@ export const getBirdsByIdFromDb = async (birdIds: string[] | null | undefined) =
 
 export const getBirdwatchingFromDb = async (id: string) => {
     const birdwatchingRef = collection(database, 'birdwatch');
-    const birdwatchingQuery = query(birdwatchingRef, where('id', '==', id));
+    const birdwatchingQuery = query(birdwatchingRef, where('id', '==', id), orderBy('date', 'desc'));
     const birdwatchingSnapshot = await getDocs(birdwatchingQuery);
 
     return !birdwatchingSnapshot.empty ? birdwatchingSnapshot.docs[0].data() as Birdwatching : null;

@@ -1,30 +1,82 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Birdwatching } from "types/Birdwatching";
+import React, { useRef } from 'react';
+import { Birdwatching } from 'types/Birdwatching';
 
-interface Props {
+interface BirdwatchingItemProps {
     birdwatching: Birdwatching;
+    isSelected?: boolean;
+    onClick: (id: string) => void;
+    onLongPress: (id: string) => void;
 }
 
-const BirdwatchingItem: React.FC<Props> = ({ birdwatching }) => (
-    <li key={birdwatching.id} className="border-b border-gray-300">
-        <Link
-            to={`/birdwatching/${birdwatching.id}`}
-            className={`flex justify-between p-3 border rounded-lg shadow-sm} hover:shadow-md transition cursor-pointer`}
-        >
-            <div className="flex flex-col justify-center items-center w-12 h-12 rounded bg-gray-600">
-                <span className="text-xl text-white font-semibold leading-tight">{birdwatching.birdIds.length}</span>
-                <span className="text-sm text-white leading-tight">aves</span>
-            </div>
+const BirdwatchingItem: React.FC<BirdwatchingItemProps> = ({ birdwatching, isSelected = false, onClick, onLongPress }) => {
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const isLongPress = useRef(false);
 
-            <div className="flex flex-col items-end">
-                <span className="text-xl font-semibold text-gray-600 text-right">{birdwatching.totalPoints} pts</span>
-                <span className="text-xs text-right">
-                    {birdwatching.date.toDate().toLocaleDateString('pt-BR')} às {birdwatching.date.toDate().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
-                </span>
-            </div>
-        </Link>
-    </li>
-);
+    const handleMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+        isLongPress.current = false;
+        timeoutRef.current = setTimeout(() => {
+            isLongPress.current = true;
+            onLongPress('');
+        }, 500);
+    };
+
+    const handleMouseUp = (e: React.MouseEvent | React.TouchEvent) => {
+        e.preventDefault();
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+        if (!isLongPress.current) {
+            onClick('');
+        }
+    };
+
+    const handleMouseLeave = () => {
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+            timeoutRef.current = null;
+        }
+    };
+
+    return (
+        <li
+            key={birdwatching.id}
+            className={`rounded-lg ${isSelected ? "bg-blue-200" : "bg-white"}`}
+        >
+            <button
+                className="w-full p-4"
+                onMouseDown={handleMouseDown}
+                onMouseUp={handleMouseUp}
+                onMouseLeave={handleMouseLeave}
+                onTouchStart={handleMouseDown}
+                onTouchEnd={handleMouseUp}
+                onTouchCancel={handleMouseLeave}
+            >
+                <div className="flex justify-between items-center gap-6 w-full text-left rounded-lg">
+                    <div className="flex flex-col items-start flex-shrink-0">
+                        <span className="text-sm">
+                            {birdwatching.date.toDate().toLocaleDateString("pt-BR", {
+                                day: "2-digit",
+                                month: "short",
+                            })
+                                .replace(" de ", " ")
+                                .replace(".", "")}
+                        </span>
+                        <span className="text-xs">
+                            {birdwatching.date.toDate().toLocaleTimeString("pt-BR", {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                            })}
+                        </span>
+                    </div>
+
+                    <span className="flex-grow text-xl whitespace-nowrap">{birdwatching.birdIds.length} espécies</span>
+
+                    <span className="text-xl font-semibold flex-shrink-0 whitespace-nowrap">{birdwatching.totalPoints} pts</span>
+                </div>
+            </button>
+        </li>
+    );
+};
 
 export default BirdwatchingItem;

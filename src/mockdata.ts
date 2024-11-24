@@ -4,6 +4,11 @@ export const mockUserStats = {
   id: "userStats1",
   userId: process.env.REACT_APP_MOCK_USER_ID || "defaultUserId",
   totalBirdwatchPoints: 100,
+  birdSightings: [
+    { "birdId": "bird001", "wasSeen": true },
+    { "birdId": "bird002", "wasSeen": false },
+    { "birdId": "bird003", "wasSeen": true }
+  ]
 };
 
 export const mockBirdwatching = [

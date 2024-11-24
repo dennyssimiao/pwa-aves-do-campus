@@ -3,10 +3,9 @@ import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from 'contexts/AuthContext';
 
 import UserProfile from 'pages/UserProfile';
-import RegisterBirdwatch from 'pages/RegisterBirdwatching';
-import BirdDetails from 'pages/BirdDetails';
+import Birdwatching from 'pages/Birdwatching';
+import BirdDetails from 'pages/Bird';
 import { BirdwatchingProvider } from 'contexts/BirdwatchingContext';
-import BirdwatchingDetails from 'pages/BirdwatchingDetails';
 
 const UserRoutes: React.FC = () => {
     const { isLoading } = useAuth();
@@ -22,9 +21,8 @@ const UserRoutes: React.FC = () => {
     return (
         <Routes>
             <Route path="/user-profile" Component={UserProfile} />
-            <Route path="/birdwatching/:birdwatchingId" Component={BirdwatchingDetails} />
-            <Route path="/register-birdwatching" element={
-                <BirdwatchingProvider><RegisterBirdwatch /></BirdwatchingProvider>
+            <Route path="/birdwatching/:birdwatchingId?" element={
+                <BirdwatchingProvider><Birdwatching /></BirdwatchingProvider>
             } />
             <Route path="/bird-details/:birdId" element={
                 <BirdwatchingProvider><BirdDetails /></BirdwatchingProvider>

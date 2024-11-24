@@ -1,13 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 
 interface BirdwatchingContextProps {
     selectedBirds: Set<string>;
     date: Date;
     totalPoints: number;
+    isLocked: boolean;
     setSelectedBirds: (birdIds: Set<string>) => void;
     setDate: (date: Date) => void;
     setTotalPoints: (points: number) => void;
-    resetBirdwatching: () => void;
+    setIsLocked: (isLocked: boolean) => void;
 }
 
 const BirdwatchingContext = createContext<BirdwatchingContextProps | null>(null);
@@ -16,16 +17,7 @@ const BirdwatchingProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     const [selectedBirds, setSelectedBirds] = useState<Set<string>>(new Set());
     const [date, setDate] = useState<Date>(new Date());
     const [totalPoints, setTotalPoints] = useState<number>(0);
-
-    useEffect(() => {
-        resetBirdwatching();
-    }, []);
-
-    const resetBirdwatching = () => {
-        setSelectedBirds(new Set());
-        setDate(new Date());
-        setTotalPoints(0);
-    };
+    const [isLocked, setIsLocked] = useState(false);
 
     return (
         <BirdwatchingContext.Provider
@@ -33,10 +25,11 @@ const BirdwatchingProvider: React.FC<{ children: React.ReactNode }> = ({ childre
                 selectedBirds,
                 date,
                 totalPoints,
+                isLocked,
                 setSelectedBirds,
                 setDate,
                 setTotalPoints,
-                resetBirdwatching,
+                setIsLocked
             }}
         >
             {children}
