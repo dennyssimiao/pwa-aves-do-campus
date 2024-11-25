@@ -41,50 +41,26 @@ const Birdwatching: React.FC = () => {
             setBirds(useMockData ? mockBirds : await getBirdsFromDb());
         };
 
-        // const fetchBirdwatching = async () => {
-        //     if (birdwatchingId) {
-        //         const birdwatching = (useMockData
-        //             ? (mockBirdwatching.find(b => b.id === birdwatchingId) || null)
-        //             : await getBirdwatchingFromDb(birdwatchingId));
-
-        //         if (birdwatching) {
-        //             setDate(birdwatching.date.toDate());
-        //             setSelectedBirds(new Set(birdwatching.birdIds));
-        //             setTotalPoints(birdwatching.totalPoints);
-        //             setIsLocked(true);
-        //         } else {
-        //             console.warn(`Birdwatching with id ${birdwatchingId} not found.`);
-        //         }
-        //     } else {
-        //         setDate(new Date());
-        //         setSelectedBirds(new Set());
-        //         setTotalPoints(0);
-        //         setIsLocked(false);
-        //     }
-        // };
-
         const fetchBirdwatching = async () => {
             if (!birdwatchingId) {
-                if (date === null) setDate(new Date());
-                if (selectedBirds.size === 0) setSelectedBirds(new Set());
-                if (totalPoints === null) setTotalPoints(0);
+                setDate((prevDate) => prevDate || new Date());
+                setSelectedBirds((prevSelected) => (prevSelected.size === 0 ? new Set() : prevSelected));
+                setTotalPoints((prevPoints) => prevPoints ?? 0);
                 setIsLocked(false);
                 return;
             }
-
-            if (isLocked === null || selectedBirds.size === 0 || totalPoints === null) {
-                const birdwatching = useMockData
-                    ? mockBirdwatching.find(b => b.id === birdwatchingId) || null
-                    : await getBirdwatchingFromDb(birdwatchingId);
-
-                if (birdwatching) {
-                    setDate(birdwatching.date.toDate());
-                    setSelectedBirds(new Set(birdwatching.birdIds));
-                    setTotalPoints(birdwatching.totalPoints);
-                    setIsLocked(true);
-                } else {
-                    console.warn(`Birdwatching with id ${birdwatchingId} not found.`);
-                }
+            
+            const birdwatching = useMockData
+                ? mockBirdwatching.find((b) => b.id === birdwatchingId) || null
+                : await getBirdwatchingFromDb(birdwatchingId);
+    
+            if (birdwatching) {
+                setDate(birdwatching.date.toDate());
+                setSelectedBirds(new Set(birdwatching.birdIds));
+                setTotalPoints(birdwatching.totalPoints);
+                setIsLocked(true);
+            } else {
+                console.warn(`Birdwatching with id ${birdwatchingId} not found.`);
             }
         };
 

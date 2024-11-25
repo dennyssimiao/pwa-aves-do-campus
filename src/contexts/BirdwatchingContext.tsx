@@ -5,10 +5,10 @@ interface BirdwatchingContextProps {
     date: Date;
     totalPoints: number;
     isLocked: boolean;
-    setSelectedBirds: (birdIds: Set<string>) => void;
-    setDate: (date: Date) => void;
-    setTotalPoints: (points: number) => void;
-    setIsLocked: (isLocked: boolean) => void;
+    setSelectedBirds: React.Dispatch<React.SetStateAction<Set<string>>>;
+    setDate: React.Dispatch<React.SetStateAction<Date>>;
+    setTotalPoints: React.Dispatch<React.SetStateAction<number>>;
+    setIsLocked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const BirdwatchingContext = createContext<BirdwatchingContextProps | null>(null);
