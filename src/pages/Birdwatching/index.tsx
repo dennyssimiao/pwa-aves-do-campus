@@ -67,6 +67,7 @@ const Birdwatching: React.FC = () => {
     }, [birdwatchingId, useMockData, setDate, setSelectedBirds, setTotalPoints, setIsLocked]);
 
     const handleSearchVisibility = (value: boolean) => {
+        window.scrollTo({ top: 0 });
         setSearchTerm('');
         setIsSearchVisible(value);
     };
@@ -131,22 +132,25 @@ const Birdwatching: React.FC = () => {
                 </ul>
             </div>
 
-            <div className="sticky bottom-0 w-full p-5 flex justify-between bg-white">
+            <div className="sticky bottom-0 w-full p-5 flex justify-between items-center bg-white">
                 <div className="flex gap-2">
-                    <button onClick={handleBack}><ArrowBackIcon /></button>
+                    <button onClick={handleBack}><ArrowBackIcon fontSize="large" /></button>
                     <button
                         onClick={() => setIsLocked(!isLocked)}
                         className={`${!birdwatchingId ? 'opacity-0 pointer-events-none' : ''}`}
                     >
-                        {isLocked ? <ModeEditIcon /> : <CheckIcon />}
+                        {isLocked ? <ModeEditIcon fontSize="large" /> : <CheckIcon fontSize="large" />}
                     </button>
                 </div>
 
                 <DateTimePicker date={date} setDate={setDate} disabled={isLocked} />
 
                 <div className="flex gap-2">
-                    <button onClick={() => handleSearchVisibility(true)}><SearchIcon /></button>
-                    <button><TuneIcon /></button>
+                    <button onClick={() => { handleSearchVisibility(true) }}>
+                        <SearchIcon fontSize="large" />
+                    </button>
+
+                    <button><TuneIcon fontSize="large" /></button>
                 </div>
             </div>
         </div>

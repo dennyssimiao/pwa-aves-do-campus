@@ -29,7 +29,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ value, isVisible, onChange, onClo
                     &times;
                 </button>
             )}
-            <button onClick={onClose}><CancelIcon /></button>
+            <button onClick={onClose}><CancelIcon fontSize="large" /></button>
         </div>
     );
 };

@@ -44,7 +44,7 @@ const BirdwatchingItem: React.FC<BirdwatchingItemProps> = ({ birdwatching, isSel
             className={`rounded-lg ${isSelected ? "bg-blue-200" : "bg-white"}`}
         >
             <button
-                className="w-full p-4"
+                className="w-full p-3"
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseLeave}
@@ -53,13 +53,13 @@ const BirdwatchingItem: React.FC<BirdwatchingItemProps> = ({ birdwatching, isSel
                 onTouchCancel={handleMouseLeave}
             >
                 <div className="flex justify-between items-center gap-6 w-full text-left rounded-lg">
-                    <div className="flex flex-col items-start flex-shrink-0">
+                    <div className="flex flex-col items-center flex-shrink-0 bg-gray-100 rounded-full p-3">
                         <span className="text-sm">
                             {birdwatching.date.toDate().toLocaleDateString("pt-BR", {
                                 day: "2-digit",
                                 month: "short",
                             })
-                                .replace(" de ", " ")
+                                .replace(" de ", "/")
                                 .replace(".", "")}
                         </span>
                         <span className="text-xs">
@@ -70,7 +70,7 @@ const BirdwatchingItem: React.FC<BirdwatchingItemProps> = ({ birdwatching, isSel
                         </span>
                     </div>
 
-                    <span className="flex-grow text-xl whitespace-nowrap">{birdwatching.birdIds.length} espécies</span>
+                    <span className="flex-grow text-lg whitespace-nowrap">{birdwatching.birdIds.length} espécies</span>
 
                     <span className="text-xl font-semibold flex-shrink-0 whitespace-nowrap">{birdwatching.totalPoints} pts</span>
                 </div>

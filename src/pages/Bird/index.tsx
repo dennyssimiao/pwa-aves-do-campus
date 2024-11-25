@@ -89,7 +89,7 @@ const BirdDetails: React.FC = () => {
 
             <div className="sticky bottom-0 w-full p-5 flex justify-between bg-white">
                 <div className="flex gap-2">
-                    <button onClick={handleBack}><ArrowBackIcon /></button>
+                    <button onClick={handleBack}><ArrowBackIcon fontSize="large" /></button>
                 </div>
 
                 <div className="flex gap-2">

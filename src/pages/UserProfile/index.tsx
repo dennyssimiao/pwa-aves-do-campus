@@ -70,14 +70,11 @@ const UserProfile: React.FC = () => {
         });
     };
 
-    const handleDeselectAll = () => {
-        setSelectedItems(new Set());
-    };
-
     const handleDeleteSelected = () => {
         console.log('Deleting selected items:', Array.from(selectedItems));
         // Proceed with deletion logic...
         setDeleteModalOpen(false);
+        setSelectedItems(new Set());
     };
 
     const handleLogout = async () => {
@@ -93,7 +90,7 @@ const UserProfile: React.FC = () => {
         <div className="max-w-lg mx-auto flex flex-col min-h-screen bg-background">
             {user && <div className="sticky top-0 w-full z-10 p-5 flex flex-col items-center bg-white">
                 <div className="flex flex-row-reverse w-full">
-                    <button onClick={handleLogout}><LogoutIcon /></button>
+                    <button onClick={handleLogout}><LogoutIcon fontSize="large" /></button>
                 </div>
                 <img src={user.photoURL} alt="User profile" className="rounded-full w-24 h-24" />
                 <h2 className="text-xl font-semibold">{user?.name}</h2>
@@ -130,13 +127,13 @@ const UserProfile: React.FC = () => {
             <div className="sticky bottom-0 w-full p-5 bg-white">
                 {selectedItems.size > 0 && (
                     <div className="flex justify-between">
-                        <button onClick={handleDeselectAll}><CloseIcon /><span> {selectedItems.size}</span></button>
-                        <button onClick={() => setDeleteModalOpen(true)}><DeleteOutlineIcon /></button>
+                        <button onClick={() => setSelectedItems(new Set())}><CloseIcon fontSize="large" /><span> {selectedItems.size}</span></button>
+                        <button onClick={() => setDeleteModalOpen(true)}><DeleteOutlineIcon fontSize="large" /></button>
                     </div>
                 )}
                 {selectedItems.size === 0 && (
                     <div className="flex flex-row-reverse">
-                        <button onClick={handleAddBirdwatching}><AddIcon /></button>
+                        <button onClick={handleAddBirdwatching}><AddIcon fontSize="large"/></button>
                     </div>
                 )}
             </div>
