@@ -24,7 +24,7 @@ const UserRoutes: React.FC = () => {
             <Route path="/birdwatching/:birdwatchingId?" element={
                 <BirdwatchingProvider><Birdwatching /></BirdwatchingProvider>
             } />
-            <Route path="/bird-details/:birdId" element={
+            <Route path="/birds/:birdId" element={
                 <BirdwatchingProvider><BirdDetails /></BirdwatchingProvider>
             } />
 

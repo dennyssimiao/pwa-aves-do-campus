@@ -38,7 +38,7 @@ const DateTimePicker: React.FC<DateTimePickerProps> = ({ date, setDate, disabled
                     className={`absolute top-0 left-0 w-full h-full opacity-0 pointer-events-none`}
                 />
                 <div
-                    className={`flex flex-row gap-3 text-xl text-center font-semibold w-full 
+                    className={`flex flex-row gap-3 text-lg text-center font-semibold w-full 
                     ${disabled
                             ? 'bg-gray-100 text-gray-600 cursor-not-allowed'
                             : 'bg-white text-gray-800 cursor-pointer'}`}

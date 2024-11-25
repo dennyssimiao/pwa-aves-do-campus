@@ -49,7 +49,6 @@ const UserProfile: React.FC = () => {
     };
 
     const handleClick = (id: string) => {
-        console.log('Short Click!');
         if (selectedItems.size) {
             handleLongPress(id)
         } else {
@@ -58,7 +57,6 @@ const UserProfile: React.FC = () => {
     };
 
     const handleLongPress = (id: string) => {
-        console.log('Long Press!');
         setSelectedItems(prevState => {
             const newSelectedItems = new Set(prevState);
             if (newSelectedItems.has(id)) {
@@ -90,7 +88,7 @@ const UserProfile: React.FC = () => {
         <div className="max-w-lg mx-auto flex flex-col min-h-screen bg-background">
             {user && <div className="sticky top-0 w-full z-10 p-5 flex flex-col items-center bg-white">
                 <div className="flex flex-row-reverse w-full">
-                    <button onClick={handleLogout}><LogoutIcon fontSize="large" /></button>
+                    <button onClick={handleLogout}><LogoutIcon /></button>
                 </div>
                 <img src={user.photoURL} alt="User profile" className="rounded-full w-24 h-24" />
                 <h2 className="text-xl font-semibold">{user?.name}</h2>
@@ -127,13 +125,13 @@ const UserProfile: React.FC = () => {
             <div className="sticky bottom-0 w-full p-5 bg-white">
                 {selectedItems.size > 0 && (
                     <div className="flex justify-between">
-                        <button onClick={() => setSelectedItems(new Set())}><CloseIcon fontSize="large" /><span> {selectedItems.size}</span></button>
-                        <button onClick={() => setDeleteModalOpen(true)}><DeleteOutlineIcon fontSize="large" /></button>
+                        <button onClick={() => setSelectedItems(new Set())}><CloseIcon /><span> {selectedItems.size}</span></button>
+                        <button onClick={() => setDeleteModalOpen(true)}><DeleteOutlineIcon /></button>
                     </div>
                 )}
                 {selectedItems.size === 0 && (
-                    <div className="flex flex-row-reverse">
-                        <button onClick={handleAddBirdwatching}><AddIcon fontSize="large"/></button>
+                    <div className="flex flex-row-reverse w-full bg-white">
+                        <button onClick={handleAddBirdwatching}><AddIcon/></button>
                     </div>
                 )}
             </div>

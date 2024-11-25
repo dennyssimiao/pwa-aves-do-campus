@@ -15,7 +15,7 @@ const BirdItem: React.FC<BirdListItemProps> = ({ bird, isSelected, disabled, onT
     const navigate = useNavigate();
 
     const handleBirdDetails = (birdId: string) => {
-        navigate(`/bird-details/${birdId}`);
+        navigate(`/birds/${birdId}`);
     };
 
     return (

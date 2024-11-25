@@ -1,6 +1,6 @@
 import { useBirdwatching } from 'contexts/BirdwatchingContext';
 import { mockBirds, mockBirdwatching } from 'mockdata';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { getBirdsFromDb, getBirdwatchingFromDb } from 'services/firebase';
 import { Bird } from 'types/Birds';
@@ -30,6 +30,7 @@ const Birdwatching: React.FC = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
     const [isSearchVisible, setIsSearchVisible] = useState(false);
+    const searchBarRef = useRef<HTMLInputElement | null>(null);
 
     const [birds, setBirds] = useState<Bird[]>([]);
 
@@ -40,11 +41,41 @@ const Birdwatching: React.FC = () => {
             setBirds(useMockData ? mockBirds : await getBirdsFromDb());
         };
 
+        // const fetchBirdwatching = async () => {
+        //     if (birdwatchingId) {
+        //         const birdwatching = (useMockData
+        //             ? (mockBirdwatching.find(b => b.id === birdwatchingId) || null)
+        //             : await getBirdwatchingFromDb(birdwatchingId));
+
+        //         if (birdwatching) {
+        //             setDate(birdwatching.date.toDate());
+        //             setSelectedBirds(new Set(birdwatching.birdIds));
+        //             setTotalPoints(birdwatching.totalPoints);
+        //             setIsLocked(true);
+        //         } else {
+        //             console.warn(`Birdwatching with id ${birdwatchingId} not found.`);
+        //         }
+        //     } else {
+        //         setDate(new Date());
+        //         setSelectedBirds(new Set());
+        //         setTotalPoints(0);
+        //         setIsLocked(false);
+        //     }
+        // };
+
         const fetchBirdwatching = async () => {
-            if (birdwatchingId) {
-                const birdwatching = (useMockData
-                    ? (mockBirdwatching.find(b => b.id === birdwatchingId) || null)
-                    : await getBirdwatchingFromDb(birdwatchingId));
+            if (!birdwatchingId) {
+                if (date === null) setDate(new Date());
+                if (selectedBirds.size === 0) setSelectedBirds(new Set());
+                if (totalPoints === null) setTotalPoints(0);
+                setIsLocked(false);
+                return;
+            }
+
+            if (isLocked === null || selectedBirds.size === 0 || totalPoints === null) {
+                const birdwatching = useMockData
+                    ? mockBirdwatching.find(b => b.id === birdwatchingId) || null
+                    : await getBirdwatchingFromDb(birdwatchingId);
 
                 if (birdwatching) {
                     setDate(birdwatching.date.toDate());
@@ -54,11 +85,6 @@ const Birdwatching: React.FC = () => {
                 } else {
                     console.warn(`Birdwatching with id ${birdwatchingId} not found.`);
                 }
-            } else {
-                setDate(new Date());
-                setSelectedBirds(new Set());
-                setTotalPoints(0);
-                setIsLocked(false);
             }
         };
 
@@ -70,6 +96,9 @@ const Birdwatching: React.FC = () => {
         window.scrollTo({ top: 0 });
         setSearchTerm('');
         setIsSearchVisible(value);
+        if (value && searchBarRef.current) {
+            searchBarRef.current.focus();
+        }
     };
 
     const handleBirdToggle = (birdId: string) => {
@@ -110,6 +139,7 @@ const Birdwatching: React.FC = () => {
 
             <div className="flex-grow overflow-y-auto z-0 p-5">
                 <SearchBar
+                    ref={searchBarRef}
                     value={searchTerm}
                     isVisible={isSearchVisible}
                     onChange={setSearchTerm}
@@ -133,24 +163,24 @@ const Birdwatching: React.FC = () => {
             </div>
 
             <div className="sticky bottom-0 w-full p-5 flex justify-between items-center bg-white">
-                <div className="flex gap-2">
-                    <button onClick={handleBack}><ArrowBackIcon fontSize="large" /></button>
+                <div className="flex gap-5">
+                    <button onClick={handleBack}><ArrowBackIcon /></button>
                     <button
                         onClick={() => setIsLocked(!isLocked)}
                         className={`${!birdwatchingId ? 'opacity-0 pointer-events-none' : ''}`}
                     >
-                        {isLocked ? <ModeEditIcon fontSize="large" /> : <CheckIcon fontSize="large" />}
+                        {isLocked ? <ModeEditIcon /> : <CheckIcon />}
                     </button>
                 </div>
 
                 <DateTimePicker date={date} setDate={setDate} disabled={isLocked} />
 
-                <div className="flex gap-2">
+                <div className="flex gap-5">
                     <button onClick={() => { handleSearchVisibility(true) }}>
-                        <SearchIcon fontSize="large" />
+                        <SearchIcon />
                     </button>
 
-                    <button><TuneIcon fontSize="large" /></button>
+                    <button><TuneIcon /></button>
                 </div>
             </div>
         </div>
